@@ -1,0 +1,119 @@
+@model HK_Calculations.Models.ImportCostViewModel
+
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="hero">
+  <div class="container">
+    <h1>HK Systems Calculations</h1>
+    <p>Realiza cálculos precisos para importación de equipos y repuestos.</p>
+  </div>
+</div>
+
+<div class="form-container">
+  <div class="container">
+    <h2 class="mb-4">Calcula el Precio de Venta</h2>
+    <p>Ingresa los datos correspondientes y obtén un desglose detallado del cálculo.</p>
+    @using (Html.BeginForm("Calculate", "Import", FormMethod.Post))
+    {
+      <div class="form-group">
+        @Html.LabelFor(m => m.FOBPrice)
+        @Html.TextBoxFor(m => m.FOBPrice, new { @class = "form-control", placeholder = "Ingrese el precio FOB" })
+      </div>
+      <div class="form-group">
+        @Html.LabelFor(m => m.FreightInsurance)
+        @Html.TextBoxFor(m => m.FreightInsurance, new { @class = "form-control", placeholder = "Ingrese el valor de Flete y Seguro" })
+      </div>
+      <hr />
+      <h4>Impuestos y Gastos</h4>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          @Html.LabelFor(m => m.Arancel)
+          @Html.TextBoxFor(m => m.Arancel, new { @class = "form-control", placeholder = "Valor o % del arancel" })
+          <div class="form-check mt-2">
+            @Html.CheckBoxFor(m => m.ArancelIsPercentage, new { @class = "form-check-input" })
+            @Html.LabelFor(m => m.ArancelIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          @Html.LabelFor(m => m.IVAImportacion)
+          @Html.TextBoxFor(m => m.IVAImportacion, new { @class = "form-control", placeholder = "Valor o % del IVA" })
+          <div class="form-check mt-2">
+            @Html.CheckBoxFor(m => m.IVAImportacionIsPercentage, new { @class = "form-check-input" })
+            @Html.LabelFor(m => m.IVAImportacionIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          @Html.LabelFor(m => m.RetencionIngresosBrutos)
+          @Html.TextBoxFor(m => m.RetencionIngresosBrutos, new { @class = "form-control", placeholder = "Valor o % de Retención" })
+          <div class="form-check mt-2">
+            @Html.CheckBoxFor(m => m.RetencionIngresosBrutosIsPercentage, new { @class = "form-check-input" })
+            @Html.LabelFor(m => m.RetencionIngresosBrutosIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          @Html.LabelFor(m => m.GastosCertificacion)
+          @Html.TextBoxFor(m => m.GastosCertificacion, new { @class = "form-control", placeholder = "Valor o % de Certificación" })
+          <div class="form-check mt-2">
+            @Html.CheckBoxFor(m => m.GastosCertificacionIsPercentage, new { @class = "form-check-input" })
+            @Html.LabelFor(m => m.GastosCertificacionIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          @Html.LabelFor(m => m.Documentacion)
+          @Html.TextBoxFor(m => m.Documentacion, new { @class = "form-control", placeholder = "Valor o % de Documentación" })
+          <div class="form-check mt-2">
+            @Html.CheckBoxFor(m => m.DocumentacionIsPercentage, new { @class = "form-check-input" })
+            @Html.LabelFor(m => m.DocumentacionIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          @Html.LabelFor(m => m.FleteLocal)
+          @Html.TextBoxFor(m => m.FleteLocal, new { @class = "form-control", placeholder = "Valor o % de Flete Local" })
+          <div class="form-check mt-2">
+            @Html.CheckBoxFor(m => m.FleteLocalIsPercentage, new { @class = "form-check-input" })
+            @Html.LabelFor(m => m.FleteLocalIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          @Html.LabelFor(m => m.HonorarioDespachante)
+          @Html.TextBoxFor(m => m.HonorarioDespachante, new { @class = "form-control", placeholder = "Valor o % del Honorario" })
+          <div class="form-check mt-2">
+            @Html.CheckBoxFor(m => m.HonorarioDespachanteIsPercentage, new { @class = "form-check-input" })
+            @Html.LabelFor(m => m.HonorarioDespachanteIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          @Html.LabelFor(m => m.OtrosGastos)
+          @Html.TextBoxFor(m => m.OtrosGastos, new { @class = "form-control", placeholder = "Valor o % de Otros Gastos" })
+          <div class="form-check mt-2">
+            @Html.CheckBoxFor(m => m.OtrosGastosIsPercentage, new { @class = "form-check-input" })
+            @Html.LabelFor(m => m.OtrosGastosIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        @Html.LabelFor(m => m.ImpuestoCheque)
+        @Html.TextBoxFor(m => m.ImpuestoCheque, new { @class = "form-control", placeholder = "Valor o % del Impuesto" })
+        <div class="form-check mt-2">
+          @Html.CheckBoxFor(m => m.ImpuestoChequeIsPercentage, new { @class = "form-check-input" })
+          @Html.LabelFor(m => m.ImpuestoChequeIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+        </div>
+      </div>
+      <hr />
+      <div class="form-group">
+        @Html.LabelFor(m => m.ProfitMargin)
+        @Html.TextBoxFor(m => m.ProfitMargin, new { @class = "form-control", placeholder = "Ingrese el margen de utilidad" })
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Calcular</button>
+    }
+  </div>
+</div>
