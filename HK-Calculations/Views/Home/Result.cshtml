@@ -1,0 +1,119 @@
+@model HK_Calculations.Models.ImportCalculationResultViewModel
+
+@{
+    ViewBag.Title = "Resultado del Cálculo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+  <div class="result-card">
+    <h2 class="mb-4 text-center">Resultado del Cálculo</h2>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>Concepto</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Precio FOB</td>
+          <td>@Model.FOBPrice.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Flete y Seguro</td>
+          <td>@Model.FreightInsurance.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Costo Base (FOB + Flete y Seguro)</td>
+          <td>@Model.TotalBaseCost.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Arancel</td>
+          <td>@Model.ArancelValue.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>IVA de Importación</td>
+          <td>@Model.IVAImportacionValue.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Retención de Ingresos Brutos</td>
+          <td>@Model.RetencionIngresosBrutosValue.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Gastos de Certificación</td>
+          <td>@Model.GastosCertificacionValue.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Documentación</td>
+          <td>@Model.DocumentacionValue.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Flete Local</td>
+          <td>@Model.FleteLocalValue.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Honorario de Despachante de Aduana</td>
+          <td>@Model.HonorarioDespachanteValue.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Otros Gastos</td>
+          <td>@Model.OtrosGastosValue.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Impuesto al Cheque</td>
+          <td>@Model.ImpuestoChequeValue.ToString("C")</td>
+        </tr>
+        <tr class="table-active">
+          <th>Total Impuestos y Gastos</th>
+          <th>@Model.TotalTaxesExpenses.ToString("C")</th>
+        </tr>
+        <tr>
+          <td>Instalación</td>
+          <td>@Model.Instalacion.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Mantenimiento</td>
+          <td>@Model.Mantenimiento.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Costo Total (Base + Impuestos y Gastos + Instalación + Mantenimiento)</td>
+          <td>@Model.TotalCost.ToString("C")</td>
+        </tr>
+        <tr>
+          <td>Margen de Utilidad (%)</td>
+          <td>@Model.ProfitMargin</td>
+        </tr>
+        <tr>
+          <td>Valor de Utilidad</td>
+          <td>@Model.ProfitValue.ToString("C")</td>
+        </tr>
+        <tr class="table-success">
+          <th>Precio de Venta</th>
+          <th>@Model.SellingPrice.ToString("C")</th>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-center mt-4">
+      @using (Html.BeginForm("EditCalculation", "Home", FormMethod.Post))
+      {
+          @Html.HiddenFor(m => m.FOBPrice)
+          @Html.HiddenFor(m => m.FreightInsurance)
+          @Html.HiddenFor(m => m.ArancelValue)
+          @Html.HiddenFor(m => m.IVAImportacionValue)
+          @Html.HiddenFor(m => m.RetencionIngresosBrutosValue)
+          @Html.HiddenFor(m => m.GastosCertificacionValue)
+          @Html.HiddenFor(m => m.DocumentacionValue)
+          @Html.HiddenFor(m => m.FleteLocalValue)
+          @Html.HiddenFor(m => m.HonorarioDespachanteValue)
+          @Html.HiddenFor(m => m.OtrosGastosValue)
+          @Html.HiddenFor(m => m.ImpuestoChequeValue)
+          @Html.HiddenFor(m => m.ProfitMargin)
+          @Html.HiddenFor(m => m.Instalacion)
+          @Html.HiddenFor(m => m.Mantenimiento)
+          <button type="submit" class="btn btn-secondary">Editar</button>
+      }
+      <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Realizar nuevo cálculo</a>
+    </div>
+  </div>
+</div>

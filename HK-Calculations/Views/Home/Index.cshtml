@@ -16,7 +16,7 @@
   <div class="container">
     <h2 class="mb-4">Calcula el Precio de Venta</h2>
     <p>Ingresa los datos correspondientes y obtén un desglose detallado del cálculo.</p>
-    @using (Html.BeginForm("Calculate", "Import", FormMethod.Post))
+    @using (Html.BeginForm("Calculate", "Home", FormMethod.Post))
     {
       <div class="form-group">
         @Html.LabelFor(m => m.FOBPrice)
@@ -108,11 +108,32 @@
           @Html.LabelFor(m => m.ImpuestoChequeIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
         </div>
       </div>
-      <hr />
       <div class="form-group">
         @Html.LabelFor(m => m.ProfitMargin)
         @Html.TextBoxFor(m => m.ProfitMargin, new { @class = "form-control", placeholder = "Ingrese el margen de utilidad" })
+        <div class="form-check mt-2">
+          @Html.CheckBoxFor(m => m.ImpuestoChequeIsPercentage, new { @class = "form-check-input" })
+          @Html.LabelFor(m => m.ImpuestoChequeIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+        </div>
       </div>
+      <div class="form-group">
+        @Html.LabelFor(m => m.Instalacion)
+        @Html.TextBoxFor(m => m.Instalacion, new { @class = "form-control", placeholder = "Ingrese el costo de Instalación" })
+        <div class="form-check mt-2">
+          @Html.CheckBoxFor(m => m.ImpuestoChequeIsPercentage, new { @class = "form-check-input" })
+          @Html.LabelFor(m => m.ImpuestoChequeIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+        </div>
+      </div>
+      <div class="form-group">
+        @Html.LabelFor(m => m.Mantenimiento)
+        @Html.TextBoxFor(m => m.Mantenimiento, new { @class = "form-control", placeholder = "Ingrese el costo de Mantenimiento" })
+        <div class="form-check mt-2">
+          @Html.CheckBoxFor(m => m.ImpuestoChequeIsPercentage, new { @class = "form-check-input" })
+          @Html.LabelFor(m => m.ImpuestoChequeIsPercentage, "¿Porcentaje?", new { @class = "form-check-label" })
+        </div>
+      </div>
+      <hr />
+      
       <button type="submit" class="btn btn-primary btn-block">Calcular</button>
     }
   </div>

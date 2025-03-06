@@ -48,5 +48,12 @@ namespace HK_Calculations.Models
 
         [Display(Name = "Margen de Utilidad (%)")]
         public decimal ProfitMargin { get; set; }
+
+        // CAMPOS INTEGRADOS
+        [Display(Name = "Instalación")]
+        public decimal Instalacion { get; set; }
+
+        [Display(Name = "Mantenimiento")]
+        public decimal Mantenimiento { get; set; }
     }
 }

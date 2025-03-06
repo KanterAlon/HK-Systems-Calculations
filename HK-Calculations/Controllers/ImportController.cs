@@ -28,8 +28,7 @@ namespace HK_Calculations.Controllers
             // Costo base: FOB + Flete y Seguro
             decimal baseCost = model.FOBPrice + model.FreightInsurance;
 
-            // Para cada impuesto/gasto, si se marcó el checkbox se aplica el cálculo porcentual sobre el costo base;
-            // de lo contrario, se usa el valor absoluto ingresado.
+            // Cálculo de cada impuesto/gasto
             decimal arancelValue = isArancelPorcentaje ? baseCost * model.Arancel / 100 : model.Arancel;
             decimal ivaValue = isIVAImportacionPorcentaje ? baseCost * model.IVAImportacion / 100 : model.IVAImportacion;
             decimal retencionValue = isRetencionPorcentaje ? baseCost * model.RetencionIngresosBrutos / 100 : model.RetencionIngresosBrutos;
@@ -45,8 +44,8 @@ namespace HK_Calculations.Controllers
                                          documentacionValue + fleteLocalValue + despachanteValue +
                                          otrosGastosValue + impuestoChequeValue;
 
-            // Costo total (base + impuestos y gastos)
-            decimal totalCost = baseCost + totalTaxesExpenses;
+            // Costo total (base + impuestos y gastos + instalación + mantenimiento)
+            decimal totalCost = baseCost + totalTaxesExpenses + model.Instalacion + model.Mantenimiento;
 
             // Cálculo del margen de utilidad y precio de venta
             decimal profitValue = totalCost * model.ProfitMargin / 100;
@@ -71,10 +70,41 @@ namespace HK_Calculations.Controllers
                 TotalCost = totalCost,
                 ProfitMargin = model.ProfitMargin,
                 ProfitValue = profitValue,
-                SellingPrice = sellingPrice
+                SellingPrice = sellingPrice,
+                // Nuevos campos
+                Instalacion = model.Instalacion,
+                Mantenimiento = model.Mantenimiento
             };
 
-            return View("Result", result);
+            return View("Result");
+        }
+
+        [HttpPost]
+        public IActionResult EditCalculation(ImportCalculationResultViewModel model)
+        {
+            // Convertimos el resultado de vuelta al modelo de entrada para editar.
+            // Aquí puedes ajustar los valores de los checkboxes si lo requieres.
+            var importCostModel = new ImportCostViewModel
+            {
+                FOBPrice = model.FOBPrice,
+                FreightInsurance = model.FreightInsurance,
+                // Si deseas conservar los porcentajes originales, deberás incluirlos.
+                // En este ejemplo se toman los valores absolutos resultantes.
+                Arancel = model.ArancelValue,
+                IVAImportacion = model.IVAImportacionValue,
+                RetencionIngresosBrutos = model.RetencionIngresosBrutosValue,
+                GastosCertificacion = model.GastosCertificacionValue,
+                Documentacion = model.DocumentacionValue,
+                FleteLocal = model.FleteLocalValue,
+                HonorarioDespachante = model.HonorarioDespachanteValue,
+                OtrosGastos = model.OtrosGastosValue,
+                ImpuestoCheque = model.ImpuestoChequeValue,
+                ProfitMargin = model.ProfitMargin,
+                Instalacion = model.Instalacion,
+                Mantenimiento = model.Mantenimiento
+            };
+
+            return View("Index");
         }
     }
 }
